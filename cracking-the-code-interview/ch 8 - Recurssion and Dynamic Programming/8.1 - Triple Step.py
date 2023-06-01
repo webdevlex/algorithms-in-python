@@ -1,30 +1,31 @@
 # Recurssion
-# def tripleStep(n):
-#     if n == 1:
-#         return 1
-#     elif n == 2:
-#         return 2
-#     elif n == 3:
-#         return 4
-#     else:
-#         return tripleStep(n - 1) + tripleStep(n - 2) + tripleStep(n - 3)
+def tripleStep(n):
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 2
+    elif n == 3:
+        return 4
+    else:
+        return tripleStep(n - 1) + tripleStep(n - 2) + tripleStep(n - 3)
+
 
 # ----- Memoization -----
-# def tripleStep(n, memo={}):
-#     if n in memo:
-#         return memo[n]
+def tripleStep(n, memo={}):
+    if n in memo:
+        return memo[n]
 
-#     if n == 1:
-#         memo[n] = 1
-#     elif n == 2:
-#         memo[n] = 2
-#     elif n == 3:
-#         memo[n] = 4
-#     else:
-#         memo[n] = (
-#             tripleStep(n - 1, memo) + tripleStep(n - 2, memo) + tripleStep(n - 3, memo)
-#         )
-#     return memo[n]
+    if n == 1:
+        memo[n] = 1
+    elif n == 2:
+        memo[n] = 2
+    elif n == 3:
+        memo[n] = 4
+    else:
+        memo[n] = (
+            tripleStep(n - 1, memo) + tripleStep(n - 2, memo) + tripleStep(n - 3, memo)
+        )
+    return memo[n]
 
 
 def tripleStep(n):
