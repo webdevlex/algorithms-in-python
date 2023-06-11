@@ -19,11 +19,8 @@ def removeDups2(linkedList):
     current = linkedList.getHead()
     while current != None:
         runner = current
-        while runner != None:
-            if (
-                runner.getNext() != None
-                and runner.getNext().getValue() == current.getValue()
-            ):
+        while runner.getNext() != None:
+            if runner.getNext().getValue() == current.getValue():
                 runner.setNext(runner.getNext().getNext())
             else:
                 runner = runner.getNext()
@@ -32,15 +29,8 @@ def removeDups2(linkedList):
 
 myList = LinkedList()
 
-myList.insert(0)
-myList.insert(5)
-myList.insert(10)
-myList.insert(15)
 myList.insert(20)
-myList.insert(0)
-myList.insert(5)
-myList.insert(10)
-myList.insert(15)
+myList.insert(20)
 myList.insert(20)
 
 print("\nBefore: ", end="")
