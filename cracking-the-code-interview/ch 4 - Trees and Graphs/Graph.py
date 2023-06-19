@@ -30,8 +30,28 @@ class UndirectedGraph:
             print()
 
 
-graph = UndirectedGraph(4)
-graph.addEdge(0, 1)
-graph.addEdge(1, 2)
-graph.addEdge(2, 3)
-graph.print()
+class DirectedGraph:
+    def __init__(self, numVertices):
+        self.numVertices = numVertices
+        self.adjList = [None] * numVertices
+
+    def getNodeAt(self, i):
+        if i >= self.numVertices:
+            return "Out of bound"
+        return self.adjList[i]
+
+    def addEdge(self, n1, n2):
+        node2 = Node(n2)
+        node2.next = self.adjList[n1]
+        self.adjList[n1] = node2
+
+    def print(self):
+        for i in range(len(self.adjList)):
+            print(f"({i})", end="")
+            currentNode = self.adjList[i]
+            if currentNode != None:
+                print(f" -> ({currentNode.value})", end="")
+                while currentNode.next != None:
+                    currentNode = currentNode.next
+                    print(f" -> ({currentNode.value})", end="")
+            print()

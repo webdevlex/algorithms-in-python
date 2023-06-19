@@ -11,7 +11,6 @@ def solution(stones):
 
     diffBeforeLastIter = abs((pile1 - stones[i - 1]) - (pile2 + stones[i - 1]))
     currentDiff = abs(pile1 - pile2)
-
     return min(currentDiff, diffBeforeLastIter)
 
 
