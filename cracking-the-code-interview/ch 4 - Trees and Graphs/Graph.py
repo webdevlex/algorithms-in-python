@@ -5,53 +5,42 @@ class Node:
 
 
 class UndirectedGraph:
-    def __init__(self, numVertices):
-        self.numVertices = numVertices
-        self.adjList = [None] * numVertices
+    def __init__(self):
+        self.adjList = {}
 
-    def addEdge(self, n1, n2):
-        node2 = Node(n2)
-        node2.next = self.adjList[n1]
-        self.adjList[n1] = node2
+    # ----------------------------------
+    # Insert
+    # ----------------------------------
+    def addEdge(self, v1, v2):
+        if v1 not in self.adjList:
+            self.adjList[v1] = [v2]
+        else:
+            self.adjList[v1].append(v2)
 
-        node1 = Node(n1)
-        node1.next = self.adjList[n2]
-        self.adjList[n2] = node1
+        if v2 not in self.adjList:
+            self.adjList[v2] = [v1]
+        else:
+            self.adjList[v2].append(v1)
 
+    # ----------------------------------
+    # Print
+    # ----------------------------------
     def print(self):
-        for i in range(len(self.adjList)):
-            print(f"({i})", end="")
-            currentNode = self.adjList[i]
-            if currentNode != None:
-                print(f" <-> ({currentNode.value})", end="")
-                while currentNode.next != None:
-                    currentNode = currentNode.next
-                    print(f" <-> ({currentNode.value})", end="")
-            print()
+        print(self.adjList)
 
 
 class DirectedGraph:
-    def __init__(self, numVertices):
-        self.numVertices = numVertices
-        self.adjList = [None] * numVertices
+    def __init__(self):
+        self.adjList = {}
 
-    def getNodeAt(self, i):
-        if i >= self.numVertices:
-            return "Out of bound"
-        return self.adjList[i]
+    def addEdge(self, v1, v2):
+        if v1 not in self.adjList:
+            self.adjList[v1] = [v2]
+        else:
+            self.adjList[v1].append(v2)
 
-    def addEdge(self, n1, n2):
-        node2 = Node(n2)
-        node2.next = self.adjList[n1]
-        self.adjList[n1] = node2
+        if v2 not in self.adjList:
+            self.adjList[v2] = []
 
     def print(self):
-        for i in range(len(self.adjList)):
-            print(f"({i})", end="")
-            currentNode = self.adjList[i]
-            if currentNode != None:
-                print(f" -> ({currentNode.value})", end="")
-                while currentNode.next != None:
-                    currentNode = currentNode.next
-                    print(f" -> ({currentNode.value})", end="")
-            print()
+        print(self.adjList)

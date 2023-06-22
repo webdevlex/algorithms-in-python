@@ -1,25 +1,36 @@
 from Graph import DirectedGraph
 
 
-def routeBetweenNodes(adjList, n1, n2):
-    node1 = adjList.getNodeAt(n1)
-    while node1 != None:
-        if node1.value == n2:
-            return True
-        node1 = adjList.getNodeAt(node1.value)
+def makeVisited(adjList):
+    visited = {}
+    for key in adjList:
+        visited[key] = False
+    return visited
 
-    node2 = adjList.getNodeAt(n2)
-    while node2 != None:
-        if node2.value == n1:
-            return True
-        node2 = adjList.getNodeAt(node2.value)
+
+def routeBetweenNodes(adjList, v1, v2):
+    que = []
+    visited = makeVisited(adjList)
+
+    que.append(v1)
+    visited[v1] = True
+
+    while len(que) != 0:
+        currentVertex = que.pop(0)
+        for adjVertex in adjList[currentVertex]:
+            if not visited[adjVertex]:
+                if adjVertex == v2:
+                    return True
+                que.append(adjVertex)
+                visited[adjVertex] = True
+
     return False
 
 
-myAdjList = DirectedGraph(4)
-myAdjList.addEdge(0, 1)
-myAdjList.addEdge(1, 3)
-myAdjList.addEdge(2, 3)
-myAdjList.print()
+myAdjList = DirectedGraph()
+myAdjList.addEdge("A", "B")
+myAdjList.addEdge("A", "C")
+myAdjList.addEdge("A", "D")
+myAdjList.addEdge("D", "B")
 
-print(routeBetweenNodes(myAdjList, 1, 2))
+print(routeBetweenNodes(myAdjList.adjList, "A", "C"))
