@@ -15,7 +15,6 @@ def helper(root, result, level):
 
     if root != None:
         node = Node(root.value, result[level])
-        print(f"adding {root.value} to level {level}")
         result[level] = node
         helper(root.left, result, level + 1)
         helper(root.right, result, level + 1)
