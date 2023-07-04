@@ -1,2 +1,1 @@
-
-        if n1 == parent.left:
+1, 

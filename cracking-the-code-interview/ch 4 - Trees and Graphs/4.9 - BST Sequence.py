@@ -51,18 +51,28 @@ class LinkedList:
         self.end = None
 
     def removeFront(self):
-        head = self.head
-        self.head = self.head.next
-        self.head.prev = None
-        head.next = None
-        return head
+        if not self.empty():
+            head = self.head
+            if self.head == self.end:
+                self.head = None
+                self.end = None
+            else:
+                self.head = self.head.next
+                self.head.prev = None
+                head.next = None
+            return head
 
     def removeEnd(self):
-        end = self.end
-        self.end = self.end.prev
-        end.prev = None
-        self.end.next = None
-        return end
+        if not self.empty():
+            if self.head == self.end:
+                self.head = None
+                self.end = None
+            else:
+                end = self.end
+                self.end = self.end.prev
+                end.prev = None
+                self.end.next = None
+                return end
 
     def insert(self, value):
         newNode = Node(value)
@@ -106,7 +116,7 @@ class LinkedList:
                 newNode.next = Node(current.value)
                 newNode.next.prev = newNode
                 newNode = newNode.next
-                self.end = newNode
+            self.end = newNode
 
     def empty(self):
         return self.head == None and self.end == None
@@ -137,4 +147,7 @@ class Node:
 
 valid = [1, 3, 4, 5, 6, 7, 8]
 root = binaryTree(valid)
-print(bstSequence(root))
+allLists = bstSequence(root)
+
+for list in allLists:
+    list.print()
