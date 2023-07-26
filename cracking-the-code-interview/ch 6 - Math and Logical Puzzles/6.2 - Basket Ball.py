@@ -4,8 +4,6 @@ one has pills of weight 1.1 grams. Given a scale that provides an exact
 measurement, how would you find the heavy bottle? You can only use the scale
 once.
 
-Explanation
-
 Probability of winning Game 1:
 The probability of winning Game 1 is denoted as p.
 
