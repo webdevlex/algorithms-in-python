@@ -42,30 +42,28 @@ def find_permutation(s, pattern):
     window_start, matched = 0, 0
     char_frequency = {}
 
-    # Count the frequency of characters in the pattern
     for char in pattern:
         if char not in char_frequency:
             char_frequency[char] = 0
         char_frequency[char] += 1
 
-    # Try to match all the characters from the pattern in the current window
+    # Try to extend the range [window_start, window_end]
     for window_end in range(len(s)):
         right_char = s[window_end]
         if right_char in char_frequency:
             char_frequency[right_char] -= 1
-            if char_frequency[right_char] >= 0:
+            if char_frequency[right_char] == 0:
                 matched += 1
 
-        # If all characters from the pattern are matched, return True
         if matched == len(char_frequency):
             return True
 
-        # Shrink the window by one character if it exceeds the pattern's length
+        # Shrink the window by one character
         if window_end >= len(pattern) - 1:
             left_char = s[window_start]
             window_start += 1
             if left_char in char_frequency:
-                if char_frequency[left_char] >= 0:
+                if char_frequency[left_char] == 0:
                     matched -= 1
                 char_frequency[left_char] += 1
 
@@ -73,10 +71,10 @@ def find_permutation(s, pattern):
 
 
 def main():
-    print("Permutation exists:", find_permutation("oidbcaf", "abc"))
-    print("Permutation exists:", find_permutation("odicf", "dc"))
-    print("Permutation exists:", find_permutation("bcdxabcdy", "bcdyabedx"))
-    print("Permutation exists:", find_permutation("aaach", "abc"))
+    print("Permutation exist:", find_permutation("oidbcaf", "abc"))
+    print("Permutation exist:", find_permutation("odicf", "dc"))
+    print("Permutation exist:", find_permutation("bcdxabcdy", "bcdyabcdx"))
+    print("Permutation exist:", find_permutation("aaacb", "abc"))
 
 
 main()
