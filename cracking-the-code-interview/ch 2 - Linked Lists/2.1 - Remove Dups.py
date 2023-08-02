@@ -1,6 +1,10 @@
+# Remove Dups: Write code to remove duplicates from an unsorted linked list.
+# How would you solve this problem if a temporary buffer is not allowed?
+
 from LinkedList import LinkedList
 
 
+# Solution 1: With temproray buffer
 def removeDups(linkedList):
     myMap = {}
     previous = None
@@ -15,6 +19,7 @@ def removeDups(linkedList):
         current = current.getNext()
 
 
+# Solution 2: Without temproray buffer
 def removeDups2(linkedList):
     current = linkedList.getHead()
     while current != None:
