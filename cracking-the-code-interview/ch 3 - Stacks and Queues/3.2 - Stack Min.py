@@ -1,8 +1,13 @@
+# Stack Min: How would you design a stack which, in addition to push and pop,
+# has a function min which returns the minimum element? Push, pop and min should
+# all operate in O(1) time.
+
+
 from stack import Stack
 from stack import StackNode
 
 
-# Solution 1
+# Solution 1: Store the current min in every node
 class StackNodeWithMin(StackNode):
     def __init__(self, data=None, min=None, next=None):
         self.data = data
@@ -27,7 +32,7 @@ class StackWithMin(Stack):
         return self.top.getMin()
 
 
-# Solution 2
+# Solution 2: Keep track of the current min using another stack
 class StackWithMin2(Stack):
     def __init__(self):
         self.top = None
