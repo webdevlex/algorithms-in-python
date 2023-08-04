@@ -3,16 +3,10 @@
 import random
 
 
+# General Deck
 class Deck:
     def __init__(self):
-        self.cards = [
-            Card("Ace", "Hearts", 14),
-            Card("Two", "Hearts", 2),
-            Card("Queen", "Diamonds", 12),
-            Card("Eight", "Clubs", 8),
-            Card("King", "Spades", 13),
-            Card("Ten", "Clubs", 10),
-        ]
+        self.cards = []
         self.dealIdx = 0
 
     def deal(self):
@@ -45,7 +39,11 @@ class Deck:
     def remainingCards(self):
         return len(self.cards) - self.dealIdx
 
+    def addCard(self, card):
+        self.cards.append(card)
 
+
+# General Card
 class Card:
     def __init__(self, face, suit, value, available=True):
         self.face = face
@@ -69,6 +67,7 @@ class Card:
         return self.available
 
 
+# General Hand
 class Hand:
     def __init__(self):
         self.cards = []
@@ -86,3 +85,91 @@ class Hand:
         if len(self.cards) <= 0:
             raise ValueError("Cannot remove a card. There are no cards in your hand.")
         self.cards.pop(idx)
+
+
+# Blackjack Card
+class BlackJackCard(Card):
+    def __init__(self, face, suit, value, available=True):
+        super().__init__(face, suit, value, available)
+
+    def isAce(self):
+        return self.value == 14
+
+    def isFaceCard(self):
+        return self.value > 10 and self.value < 14
+
+    def getValue(self):
+        if self.isFaceCard():
+            return 10
+        if self.isAce():
+            return [1, 11]
+        return self.value
+
+
+class BlackJackHand(Hand):
+    def score(self):
+        result = 0
+        ace = None
+        for card in self.cards:
+            if card.isAce():
+                ace = card
+            else:
+                result += card.getValue()
+
+        if ace:
+            max = result + ace.getValue()[1]
+            min = result + ace.getValue()[0]
+            if max > 21:
+                return min
+            else:
+                return max
+
+        return result
+
+    def is21(self):
+        return self.score() == 21
+
+    def busted(self):
+        return self.score() > 21
+
+    def possibleScores(self):
+        result = 0
+        ace = None
+        for card in self.cards:
+            if card.isAce():
+                ace = card
+            else:
+                result += card.getValue()
+
+        if ace:
+            max = result + ace.getValue()[1]
+            min = result + ace.getValue()[0]
+            return [min, max]
+
+        return result
+
+    def isBlackJack(self):
+        firstTwoCards = len(self.cards) == 2
+        return firstTwoCards and self.is21()
+
+
+cards = [
+    BlackJackCard("Ten", "Clubs", 10),
+    BlackJackCard("Ace", "Hearts", 14),
+    BlackJackCard("Two", "Hearts", 2),
+    BlackJackCard("Queen", "Diamonds", 12),
+    BlackJackCard("Eight", "Clubs", 8),
+    BlackJackCard("King", "Spades", 13),
+]
+myDeck = Deck()
+
+for card in cards:
+    myDeck.addCard(card)
+
+myBlackJackHand = BlackJackHand()
+
+for i in range(2):
+    dealtCard = myDeck.deal()
+    myBlackJackHand.addCard(dealtCard)
+
+print(myBlackJackHand.isBlackJack())
