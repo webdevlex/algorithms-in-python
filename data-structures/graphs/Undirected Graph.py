@@ -17,7 +17,7 @@ class Undirected_Graph:
         print(self.graph)
 
     # ----------------------------------
-    # Depth First Search
+    # Depth First Search (Recursive)
     # ----------------------------------
     def DFS_helper(self, current_idx, visited, result):
         visited[current_idx] = True
@@ -30,4 +30,21 @@ class Undirected_Graph:
         visited = [False] * self.num_nodes
         result = []
         self.DFS_helper(0, visited, result)
+        return result
+
+    # ----------------------------------
+    # Breadth First Search (Iterative)
+    # ----------------------------------
+    def BFS_iter(self):
+        visited = [False] * self.num_nodes
+        visited[0] = True
+        result = [0]
+
+        current_idx = 0
+        while len(result) != self.num_nodes:
+            for node in self.graph[current_idx]:
+                if not visited[node]:
+                    visited[node] = True
+                    result.append(node)
+            current_idx += 1
         return result
