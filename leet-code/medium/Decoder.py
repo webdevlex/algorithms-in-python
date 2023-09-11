@@ -52,9 +52,9 @@ example2 = [
 
 example3 = [[1, "-"], [2, "h"], [3, "e"], [4, "y"], [5, "-"], [6, "b"], [7, "-"]]
 
-examples = [example1, example2, example3]
+allExamples = [example1, example2, example3]
 
-for example in examples:
+for example in allExamples:
     decoder = Decoder()
     for item in example:
         decoder.process_sample(item[0], item[1])
