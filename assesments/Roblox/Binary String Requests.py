@@ -1,7 +1,12 @@
 def algo(binaryString, requests):
+    originalString = binaryString
+    flippedString = None
+    flipped = False
+
     answers = []
     for request in requests:
-        if ":" in request:
+        isFlip = len(request) == 4
+        if not isFlip:
             idx = int(request.split(":")[1])
             zeroCount = 0
             for i in range(idx + 1):
@@ -9,12 +14,19 @@ def algo(binaryString, requests):
                     zeroCount += 1
             answers.append(zeroCount)
         else:
-            length = len(binaryString)
-            mask = 1 << len(binaryString)
-            mask -= 1
-            num = int(binaryString, 2)
-            value = num ^ mask
-            binaryString = format(value, f"0{length}b")
+            if not flippedString:
+                length = len(binaryString)
+                mask = (1 << length) - 1
+                num = int(binaryString, 2)
+                value = num ^ mask
+                flippedString = format(value, f"0{length}b")
+
+            if not flipped:
+                binaryString = flippedString
+                flipped = True
+            else:
+                binaryString = originalString
+                flipped = False
     return answers
 
 
