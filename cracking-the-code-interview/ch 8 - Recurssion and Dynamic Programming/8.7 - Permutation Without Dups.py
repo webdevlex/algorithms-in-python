@@ -16,3 +16,6 @@ def permutations(str, memo={}):
                 result.append(newPerm)
     memo[str] = result
     return memo[str]
+
+
+print(permutations("abc"))
