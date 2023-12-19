@@ -1,8 +1,11 @@
+from typing import List
+
+
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        numsDict = {}
+        mySet = set()
         for num in nums:
-            if num in numsDict:
+            if num in mySet:
                 return True
-            numsDict[num] = 1
+            mySet.add(num)
         return False
