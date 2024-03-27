@@ -1,7 +1,7 @@
 def insertionSort(arr):
     for i in range(0, len(arr) - 1):
         currentIdx = i
-        while currentIdx >= 0 and arr[currentIdx + 1] < arr[currentIdx]:
+        while currentIdx >= 0 and arr[currentIdx] > arr[currentIdx + 1]:
             arr[currentIdx + 1], arr[currentIdx] = arr[currentIdx], arr[currentIdx + 1]
             currentIdx -= 1
 
