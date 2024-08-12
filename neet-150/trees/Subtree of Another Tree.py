@@ -1,5 +1,6 @@
 from typing import Optional
 
+
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -7,26 +8,21 @@ class TreeNode:
         self.left = left
         self.right = right
 
+
 class Solution:
-    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
-        def recure(root, subRoot):
-            if not root and not subRoot:
-                return True
-            elif (not root and subRoot) or (root and not subRoot):
-                return False
-
-            leftRes = recure(root.left, subRoot.left)
-            rightRes = recure(root.right, subRoot.right)
-
-            return leftRes and rightRes and root.val == subRoot.val
-
-        if not root or not subRoot: 
+    def isSubtree(self, s: TreeNode, t: TreeNode) -> bool:
+        if not t:
+            return True
+        if not s:
             return False
-        elif root.val == subRoot.val:
-            if recure(root, subRoot):
-                return True
-        
-        searchLeft = self.isSubtree(root.left, subRoot)
-        searchRight = self.isSubtree(root.right, subRoot)
 
-        return searchLeft or searchRight
+        if self.sameTree(s, t):
+            return True
+        return self.isSubtree(s.left, t) or self.isSubtree(s.right, t)
+
+    def sameTree(self, s, t):
+        if not s and not t:
+            return True
+        if s and t and s.val == t.val:
+            return self.sameTree(s.left, t.left) and self.sameTree(s.right, t.right)
+        return False
