@@ -1,58 +1,57 @@
 class Solution:
     # Recursion
+    # Time Complexity: O(2^n)
+    # Space Complexity: O(n)
     def climbStairs1(self, n: int) -> int:
-
-        def dfs(i):
-            if i > n:
-                return 0
-            elif i == n:
+        def dfs(steps):
+            if steps == n:
                 return 1
-
-            return dfs(i + 1) + dfs(i + 2)
+            elif steps > n:
+                return 0
+            return dfs(steps + 1) + dfs(steps + 2)
 
         return dfs(0)
 
     # Top Down
+    # Time Complexity: O(n)
+    # Space Complexity: O(n)
     def climbStairs2(self, n: int) -> int:
-        memo = {n + 1: 0, n: 1}
+        memo = {n: 1, n + 1: 0}
 
-        def dfs(i):
-            if i in memo:
-                return memo[i]
+        def dfs(steps):
+            if steps in memo:
+                return memo[steps]
 
-            memo[i] = dfs(i + 1) + dfs(i + 2)
-            return memo[i]
+            memo[steps] = dfs(steps + 1) + dfs(steps + 2)
+            return memo[steps]
 
         return dfs(0)
 
     # Bottom Up
+    # Time Complexity: O(n)
+    # Space Complexity: O(n)
     def climbStairs3(self, n: int) -> int:
-        if n < 2:
-            return n
-        # [0,0,0,0,...]
-        memo = [0] * n
+        memo = {n: 1, n + 1: 0}
 
-        # [1,2,0,0,...]
-        memo[0], memo[1] = 1, 2
+        for i in range(n - 1, -1, -1):
+            memo[i] = memo[i + 1] + memo[i + 2]
 
-        for i in range(2, n):
-            memo[i] = memo[i - 1] + memo[i - 2]
-        return memo[n - 1]
+        return memo[0]
 
     # Space Optimized
+    # Time Complexity: O(n)
+    # Space Complexity: O(1)
     def climbStairs4(self, n: int) -> int:
-        # [x, x, x, x, ...] 1, 0
-        one, two = 1, 0
+        left, right = 1, 0
 
         for _ in range(n - 1, -1, -1):
-            print(_)
-            temp = one + two
-            two = one
-            one = temp
+            temp = left
+            left = left + right
+            right = temp
 
-        return one
+        return left
 
 
 solutions = Solution()
-res = solutions.climbStairs3(2)
+res = solutions.climbStairs3(3)
 print(res)

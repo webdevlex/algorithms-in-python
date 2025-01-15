@@ -1,54 +1,57 @@
 class Solution:
-    # Brute force
-    def countSubstrings1(self, s: str) -> int:
-        res = 0
-        for l in range(len(s)):
-            for r in range(l, len(s)):
-                while l <= r and s[l] == s[r]:
-                    l += 1
-                    r -= 1
+    # Recursion
+    # Time Complexity: O(2^n)
+    # Space Complexity: O(n)
+    def climbStairs1(self, n: int) -> int:
+        def dfs(steps):
+            if steps == n:
+                return 1
+            elif steps > n:
+                return 0
+            return dfs(steps + 1) + dfs(steps + 2)
 
-                if l >= r:
-                    res += 1
+        return dfs(0)
 
-        return res
+    # Top Down
+    # Time Complexity: O(n)
+    # Space Complexity: O(n)
+    def climbStairs2(self, n: int) -> int:
+        memo = {n: 1, n + 1: 0}
 
-    def countSubstrings2(self, s: str) -> int:
-        n = len(s)
-        memo = [[False] * n for _ in range(n)]
+        def dfs(steps):
+            if steps in memo:
+                return memo[steps]
 
-        res = 0
-        for l in range(n - 1, -1, -1):  # Start from the last index
-            print(f"l: {l}")
-            for r in range(l, n):  # Iterate forward for the right boundary
-                print(f"r: {r}")
-                if s[l] == s[r] and (r - l <= 2 or memo[l + 1][r - 1]):
-                    memo[l][r] = True
-                    res += 1
-        return res
+            memo[steps] = dfs(steps + 1) + dfs(steps + 2)
+            return memo[steps]
 
-    # Optimized
-    def countSubstrings3(self, s: str) -> int:
-        res = 0
-        for mid in range(len(s)):
-            l = mid
-            r = mid
-            while l > -1 and r < len(s) and s[l] == s[r]:
-                l -= 1
-                r += 1
-                res += 1
+        return dfs(0)
 
-            l = mid
-            r = mid + 1
-            while l > -1 and r < len(s) and s[l] == s[r]:
-                l -= 1
-                r += 1
-                res += 1
+    # Bottom Up
+    # Time Complexity: O(n)
+    # Space Complexity: O(n)
+    def climbStairs3(self, n: int) -> int:
+        memo = {n: 1, n + 1: 0}
 
-        return res
+        for i in range(n - 1, -1, -1):
+            memo[i] = memo[i + 1] + memo[i + 2]
+
+        return memo[0]
+
+    # Space Optimized
+    # Time Complexity: O(n)
+    # Space Complexity: O(1)
+    def climbStairs4(self, n: int) -> int:
+        left, right = 1, 0
+
+        for _ in range(n - 1, -1, -1):
+            temp = left
+            left = left + right
+            right = temp
+
+        return left
 
 
 solutions = Solution()
-res = solutions.countSubstrings2("aaaa")
-
+res = solutions.climbStairs3(3)
 print(res)
